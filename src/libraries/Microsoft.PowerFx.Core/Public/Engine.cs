@@ -228,7 +228,7 @@ namespace Microsoft.PowerFx
                 Symbols = combinedSymbols,
             };
 
-            if (result.IsSuccess)
+            if (result.IsSuccess && !result.HasDeferredArgsWarning)
             {
                 result.TopLevelIdentifiers = DependencyFinder.FindDependencies(binding.Top, binding);
 
