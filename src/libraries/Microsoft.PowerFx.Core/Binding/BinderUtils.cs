@@ -142,7 +142,7 @@ namespace Microsoft.PowerFx.Core.Binding
                 // Typecheck the invocation and infer the return type.
                 //typeCheckSucceeded = maybeFunc.HandleCheckInvocation(txb, args, argTypes, localWarnings, out returnType, out nodeToCoercedTypeMap);
 
-                typeCheckSucceeded = HandleCheckInvocationWithUnknown(maybeFunc, txb, args, argTypes, out var checkInvocationErrors, out returnType, out nodeToCoercedTypeMap);
+                typeCheckSucceeded = HandleCheckInvocationWithDeferred(maybeFunc, txb, args, argTypes, out var checkInvocationErrors, out returnType, out nodeToCoercedTypeMap);
 
                 // Adding back all the errors to local warnings
                 foreach (var error in checkInvocationErrors.GetErrors())
@@ -200,7 +200,7 @@ namespace Microsoft.PowerFx.Core.Binding
         /// <summary>
         /// Typecheck the invocation and infer the return type. Error on deferred(unknown) arg is not considered.
         /// </summary>
-        internal static bool HandleCheckInvocationWithUnknown(TexlFunction maybeFunc, TexlBinding txb, TexlNode[] args, DType[] argTypes, out ErrorContainer checkInvocationErrors, out DType returnType, out Dictionary<TexlNode, DType> nodeToCoercedTypeMap)
+        internal static bool HandleCheckInvocationWithDeferred(TexlFunction maybeFunc, TexlBinding txb, TexlNode[] args, DType[] argTypes, out ErrorContainer checkInvocationErrors, out DType returnType, out Dictionary<TexlNode, DType> nodeToCoercedTypeMap)
         {
             // This error container is used as temporary container so we can trap type mismatch kind of error for
             // deferred (unknown) type args and validate all the errors were caused due to deferred(unknown) type.
